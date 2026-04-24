@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { Invoice } from '@/types'
 import { ArrowLeft, Download } from 'lucide-react'
 import Image from 'next/image'
@@ -10,6 +11,12 @@ interface Props {
 }
 
 export default function InvoicePreview({ invoice, onBack }: Props) {
+  const [signature, setSignature] = useState<string | null>(null)
+
+  useEffect(() => {
+    setSignature(localStorage.getItem('bristeen_signature') ?? '/signature.png')
+  }, [])
+
   function handleDownload() {
     window.print()
   }
@@ -93,6 +100,12 @@ export default function InvoicePreview({ invoice, onBack }: Props) {
               <span>Subtotal</span>
               <span>₦{invoice.subtotal.toFixed(2)}</span>
             </div>
+            {invoice.vat_rate > 0 && (
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>VAT ({invoice.vat_rate}%)</span>
+                <span>₦{(invoice.subtotal * invoice.vat_rate / 100).toFixed(2)}</span>
+              </div>
+            )}
             <div className="flex justify-between font-bold text-base text-gray-800 border-t pt-1 border-gray-300">
               <span>Total</span>
               <span>₦{invoice.total.toFixed(2)}</span>
@@ -114,8 +127,21 @@ export default function InvoicePreview({ invoice, onBack }: Props) {
           </div>
         )}
 
+        {/* Signature */}
+        <div className="mt-8 flex justify-end">
+          <div className="text-center min-w-40">
+            {signature
+              ? <img src={signature} alt="Signature" className="h-12 mx-auto mb-1 object-contain" />
+              : <div className="h-12 mb-1" />
+            }
+            <div className="border-t border-gray-400 pt-1">
+              <p className="text-xs text-gray-500">Authorized Signature</p>
+            </div>
+          </div>
+        </div>
+
         {/* Footer */}
-        <div className="border-t border-gray-200 pt-4 text-center">
+        <div className="border-t border-gray-200 pt-4 mt-6 text-center">
           <p className="text-xs text-gray-400">Thank you for choosing Bristeen Catering Services!</p>
         </div>
       </div>

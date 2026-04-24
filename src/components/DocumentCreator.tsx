@@ -28,6 +28,7 @@ export default function DocumentCreator({ items, existingClients }: Props) {
   const [dueDate, setDueDate] = useState('')
   const [notes, setNotes] = useState('')
   const [lineItems, setLineItems] = useState<InvoiceItem[]>([])
+  const [vatRate, setVatRate] = useState(0)
   const [saving, setSaving] = useState(false)
   const [clientSuggestions, setClientSuggestions] = useState<string[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -82,7 +83,8 @@ export default function DocumentCreator({ items, existingClients }: Props) {
   }
 
   const subtotal = lineItems.reduce((sum, l) => sum + l.total, 0)
-  const total = subtotal
+  const vatAmount = subtotal * vatRate / 100
+  const total = subtotal + vatAmount
 
   async function handleSave() {
     if (!clientName || lineItems.length === 0) return
@@ -99,6 +101,7 @@ export default function DocumentCreator({ items, existingClients }: Props) {
       due_date: dueDate || null,
       notes: notes || null,
       subtotal,
+      vat_rate: vatRate,
       total,
       status: docType === 'receipt' ? 'paid' : 'pending',
     }).select().single()
@@ -252,10 +255,32 @@ export default function DocumentCreator({ items, existingClients }: Props) {
               </div>
             ))}
 
-            <div className="flex justify-end pt-2 border-t border-gray-100">
-              <div className="text-right space-y-1">
-                <p className="text-sm text-gray-500">Subtotal: <span className="font-semibold text-gray-700">₦{subtotal.toFixed(2)}</span></p>
-                <p className="text-lg font-bold text-gray-800">Total: ₦{total.toFixed(2)}</p>
+            <div className="pt-2 border-t border-gray-100 space-y-2">
+              <div className="flex items-center justify-between text-sm text-gray-500">
+                <span>Subtotal</span>
+                <span className="font-semibold text-gray-700">₦{subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <span>VAT / Tax</span>
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="0.5"
+                      value={vatRate}
+                      onChange={e => setVatRate(parseFloat(e.target.value) || 0)}
+                      className="w-16 border border-gray-200 rounded-lg px-2 py-1 text-sm text-center text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    />
+                    <span className="text-gray-400">%</span>
+                  </div>
+                </div>
+                <span className="font-semibold text-gray-700">₦{vatAmount.toFixed(2)}</span>
+              </div>
+              <div className="flex items-center justify-between text-lg font-bold text-gray-800 border-t border-gray-100 pt-2">
+                <span>Total</span>
+                <span>₦{total.toFixed(2)}</span>
               </div>
             </div>
           </div>

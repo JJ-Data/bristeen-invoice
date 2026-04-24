@@ -29,6 +29,7 @@ create table if not exists invoices (
   due_date date,
   notes text,
   subtotal decimal(10,2) not null default 0,
+  vat_rate decimal(5,2) not null default 0,
   total decimal(10,2) not null default 0,
   status text default 'pending' check (status in ('pending', 'paid', 'cancelled')),
   created_by uuid references auth.users(id),

@@ -36,6 +36,7 @@ export interface Invoice {
   due_date: string | null
   notes: string | null
   subtotal: number
+  vat_rate: number
   total: number
   status: 'pending' | 'paid' | 'cancelled'
   created_at: string

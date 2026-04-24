@@ -41,6 +41,7 @@ export default function HistoryDocumentView({ invoice }: { invoice: Invoice }) {
       due_date: null,
       notes: invoice.notes,
       subtotal: invoice.subtotal,
+      vat_rate: invoice.vat_rate,
       total: invoice.total,
       status: 'paid',
     }).select().single()
