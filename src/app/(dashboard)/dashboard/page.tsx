@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { FileText, Receipt, Package, Clock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
+import { fmt } from '@/lib/format'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -89,7 +90,7 @@ export default async function DashboardPage() {
                   <span className="text-xs text-gray-400 ml-2">{doc.invoice_number}</span>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-bold text-gray-800">₦{doc.total.toFixed(2)}</p>
+                  <p className="text-sm font-bold text-gray-800">₦{fmt(doc.total)}</p>
                   <p className="text-xs text-gray-400">{doc.date}</p>
                 </div>
               </Link>

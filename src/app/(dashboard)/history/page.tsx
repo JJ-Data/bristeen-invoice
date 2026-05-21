@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { FileText, Receipt } from 'lucide-react'
+import { fmt } from '@/lib/format'
 
 export default async function HistoryPage() {
   const supabase = await createClient()
@@ -34,7 +35,7 @@ export default async function HistoryPage() {
                   <p className="text-xs text-gray-400">{doc.invoice_number} · {doc.date}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="font-bold text-gray-800">₦{doc.total.toFixed(2)}</p>
+                  <p className="font-bold text-gray-800">₦{fmt(doc.total)}</p>
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                     doc.status === 'paid'
                       ? 'bg-green-100 text-green-700'

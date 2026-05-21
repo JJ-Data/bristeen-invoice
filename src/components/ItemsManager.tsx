@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Item } from '@/types'
 import { Plus, Trash2, Pencil, Check, X } from 'lucide-react'
+import { fmt } from '@/lib/format'
 
 export default function ItemsManager({ initialItems }: { initialItems: Item[] }) {
   const supabase = createClient()
@@ -137,7 +138,7 @@ export default function ItemsManager({ initialItems }: { initialItems: Item[] })
                     <>
                       <td className="px-5 py-3 font-medium text-gray-800">{item.name}</td>
                       <td className="px-5 py-3 text-gray-500 hidden sm:table-cell">{item.unit ?? '—'}</td>
-                      <td className="px-5 py-3 text-right font-medium text-gray-800">₦{item.default_price.toFixed(2)}</td>
+                      <td className="px-5 py-3 text-right font-medium text-gray-800">₦{fmt(item.default_price)}</td>
                       <td className="px-5 py-3">
                         <div className="flex gap-2 justify-end">
                           <button onClick={() => startEdit(item)} className="text-gray-400 hover:text-amber-500 transition"><Pencil className="w-4 h-4" /></button>

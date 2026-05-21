@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Invoice } from '@/types'
+import { fmt } from '@/lib/format'
 import { ArrowLeft, Download } from 'lucide-react'
 import Image from 'next/image'
 
@@ -86,8 +87,8 @@ export default function InvoicePreview({ invoice, onBack }: Props) {
               <tr key={i} className="border-b border-gray-100">
                 <td className="py-2 text-gray-700">{item.item_name}</td>
                 <td className="py-2 text-center text-gray-600">{item.quantity}</td>
-                <td className="py-2 text-right text-gray-600">₦{item.unit_price.toFixed(2)}</td>
-                <td className="py-2 text-right font-medium text-gray-800">₦{item.total.toFixed(2)}</td>
+                <td className="py-2 text-right text-gray-600">₦{fmt(item.unit_price)}</td>
+                <td className="py-2 text-right font-medium text-gray-800">₦{fmt(item.total)}</td>
               </tr>
             ))}
           </tbody>
@@ -98,22 +99,22 @@ export default function InvoicePreview({ invoice, onBack }: Props) {
           <div className="w-48 space-y-1">
             <div className="flex justify-between text-sm text-gray-600">
               <span>Subtotal</span>
-              <span>₦{invoice.subtotal.toFixed(2)}</span>
+              <span>₦{fmt(invoice.subtotal)}</span>
             </div>
             {invoice.vat_rate > 0 && (
               <div className="flex justify-between text-sm text-gray-600">
                 <span>VAT ({invoice.vat_rate}%)</span>
-                <span>₦{(invoice.subtotal * invoice.vat_rate / 100).toFixed(2)}</span>
+                <span>₦{fmt(invoice.subtotal * invoice.vat_rate / 100)}</span>
               </div>
             )}
             <div className="flex justify-between font-bold text-base text-gray-800 border-t pt-1 border-gray-300">
               <span>Total</span>
-              <span>₦{invoice.total.toFixed(2)}</span>
+              <span>₦{fmt(invoice.total)}</span>
             </div>
             {isReceipt && (
               <div className="flex justify-between text-green-600 font-semibold text-sm">
                 <span>Amount Paid</span>
-                <span>₦{invoice.total.toFixed(2)}</span>
+                <span>₦{fmt(invoice.total)}</span>
               </div>
             )}
           </div>
@@ -124,6 +125,18 @@ export default function InvoicePreview({ invoice, onBack }: Props) {
           <div className="bg-gray-50 rounded-lg p-3 mb-6">
             <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Notes</p>
             <p className="text-sm text-gray-600">{invoice.notes}</p>
+          </div>
+        )}
+
+        {/* Payment Details — invoices only */}
+        {!isReceipt && (
+          <div className="bg-amber-50 border border-amber-100 rounded-lg p-3 mb-6">
+            <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">Payment Details</p>
+            <div className="space-y-0.5 text-sm text-gray-700">
+              <p><span className="text-gray-400">Bank:</span> <span className="font-medium">PLACEHOLDER_BANK</span></p>
+              <p><span className="text-gray-400">Account Name:</span> <span className="font-medium">PLACEHOLDER_ACCOUNT_NAME</span></p>
+              <p><span className="text-gray-400">Account No:</span> <span className="font-bold tracking-widest">PLACEHOLDER_ACCOUNT_NUMBER</span></p>
+            </div>
           </div>
         )}
 

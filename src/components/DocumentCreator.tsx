@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import { generateInvoiceNumber } from '@/lib/invoice-number'
 import { Item, InvoiceItem, DocumentType } from '@/types'
 import { Plus, Trash2, Save } from 'lucide-react'
+import { fmt } from '@/lib/format'
 
 interface Props {
   items: Item[]
@@ -247,7 +248,7 @@ export default function DocumentCreator({ items, existingClients }: Props) {
                   className="col-span-3 border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-right text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
                 />
                 <span className="col-span-1 text-sm text-right text-gray-700 font-medium">
-                  {line.total.toFixed(2)}
+                  {fmt(line.total)}
                 </span>
                 <button onClick={() => removeLine(i)} className="col-span-1 text-gray-300 hover:text-red-500 transition flex justify-center">
                   <Trash2 className="w-4 h-4" />
@@ -258,7 +259,7 @@ export default function DocumentCreator({ items, existingClients }: Props) {
             <div className="pt-2 border-t border-gray-100 space-y-2">
               <div className="flex items-center justify-between text-sm text-gray-500">
                 <span>Subtotal</span>
-                <span className="font-semibold text-gray-700">₦{subtotal.toFixed(2)}</span>
+                <span className="font-semibold text-gray-700">₦{fmt(subtotal)}</span>
               </div>
               <div className="flex items-center justify-between text-sm text-gray-500">
                 <div className="flex items-center gap-2">
@@ -276,11 +277,11 @@ export default function DocumentCreator({ items, existingClients }: Props) {
                     <span className="text-gray-400">%</span>
                   </div>
                 </div>
-                <span className="font-semibold text-gray-700">₦{vatAmount.toFixed(2)}</span>
+                <span className="font-semibold text-gray-700">₦{fmt(vatAmount)}</span>
               </div>
               <div className="flex items-center justify-between text-lg font-bold text-gray-800 border-t border-gray-100 pt-2">
                 <span>Total</span>
-                <span>₦{total.toFixed(2)}</span>
+                <span>₦{fmt(total)}</span>
               </div>
             </div>
           </div>
