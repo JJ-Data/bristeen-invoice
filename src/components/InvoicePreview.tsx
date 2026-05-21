@@ -73,22 +73,28 @@ export default function InvoicePreview({ invoice, onBack }: Props) {
         </div>
 
         {/* Items Table */}
-        <table className="w-full text-sm mb-6">
+        <table className="w-full text-xs sm:text-sm mb-6 table-fixed">
+          <colgroup>
+            <col className="w-[40%]" />
+            <col className="w-[10%]" />
+            <col className="w-[25%]" />
+            <col className="w-[25%]" />
+          </colgroup>
           <thead>
             <tr className="border-b-2 border-gray-800">
-              <th className="text-left py-2 font-semibold text-gray-700">Description</th>
-              <th className="text-center py-2 font-semibold text-gray-700">Qty</th>
-              <th className="text-right py-2 font-semibold text-gray-700">Unit Price</th>
-              <th className="text-right py-2 font-semibold text-gray-700">Amount</th>
+              <th className="text-left py-2 pr-2 font-semibold text-gray-700">Description</th>
+              <th className="text-center py-2 px-1 font-semibold text-gray-700">Qty</th>
+              <th className="text-right py-2 px-1 font-semibold text-gray-700">Unit Price</th>
+              <th className="text-right py-2 pl-1 font-semibold text-gray-700">Amount</th>
             </tr>
           </thead>
           <tbody>
             {invoice.invoice_items.map((item, i) => (
               <tr key={i} className="border-b border-gray-100">
-                <td className="py-2 text-gray-700">{item.item_name}</td>
-                <td className="py-2 text-center text-gray-600">{item.quantity}</td>
-                <td className="py-2 text-right text-gray-600">₦{fmt(item.unit_price)}</td>
-                <td className="py-2 text-right font-medium text-gray-800">₦{fmt(item.total)}</td>
+                <td className="py-2 pr-2 text-gray-700 break-words">{item.item_name}</td>
+                <td className="py-2 px-1 text-center text-gray-600">{item.quantity}</td>
+                <td className="py-2 px-1 text-right text-gray-600 whitespace-nowrap">₦{fmt(item.unit_price)}</td>
+                <td className="py-2 pl-1 text-right font-medium text-gray-800 whitespace-nowrap">₦{fmt(item.total)}</td>
               </tr>
             ))}
           </tbody>
