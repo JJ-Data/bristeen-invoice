@@ -133,9 +133,9 @@ export default function InvoicePreview({ invoice, onBack }: Props) {
           <div className="bg-amber-50 border border-amber-100 rounded-lg p-3 mb-6">
             <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">Payment Details</p>
             <div className="space-y-0.5 text-sm text-gray-700">
-              <p><span className="text-gray-400">Bank:</span> <span className="font-medium">PLACEHOLDER_BANK</span></p>
-              <p><span className="text-gray-400">Account Name:</span> <span className="font-medium">PLACEHOLDER_ACCOUNT_NAME</span></p>
-              <p><span className="text-gray-400">Account No:</span> <span className="font-bold tracking-widest">PLACEHOLDER_ACCOUNT_NUMBER</span></p>
+              <p><span className="text-gray-400">Bank:</span> <span className="font-medium">Access Bank</span></p>
+              <p><span className="text-gray-400">Account Name:</span> <span className="font-medium">Bristeen Catering Services</span></p>
+              <p><span className="text-gray-400">Account No:</span> <span className="font-bold tracking-widest">1463898191</span></p>
             </div>
           </div>
         )}
